@@ -1,7 +1,10 @@
 import requests
 
-response = requests.get("http://dh2023.meetings.bio:1081/secretmessage")
+try:
+    response = requests.get(f"http://10.245.129.154/secretmessage")
 
-message = response.text
+    message = response.text
 
-print(message)
+    print(message)
+except Exception as e:
+    print(e)
