@@ -3,6 +3,8 @@ import random
 
 def get_tweet(temperature, prompt):
 
+    temperature = float(1.0 - temperature/100)
+
     model = "gpt-4"
     token = "At6UbHxSFA2iygYCkQmhhvqQKmyReq"
 
