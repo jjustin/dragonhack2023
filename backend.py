@@ -57,8 +57,10 @@ def authStep2(code):
 
 @app.route("/tweet", methods=["POST"])
 def tweet():
-    print(request.authorization)
+    # bearer = request.authorization
     print("Fake tweet: ", request.json)
+    # api = Api(bearer_token=bearer["username"])
+    # api.create_tweet("Test tweet")
     return {}
 
 
