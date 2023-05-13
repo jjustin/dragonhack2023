@@ -1,4 +1,5 @@
 import * as React from "react";
+import { auth, isLoggedIn } from "../twitter/twitter";
 
 export default function Header(props) {
   return (
@@ -9,8 +10,14 @@ export default function Header(props) {
             DIGITAL PROTESTS<span className="animate-bounce"></span>
           </em>
         </h1>
+        <button
+          onClick={() => {
+            auth();
+          }}
+        >
+          login
+        </button>
       </section>
     </>
   );
 }
-

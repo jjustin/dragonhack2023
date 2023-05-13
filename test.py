@@ -9,8 +9,6 @@ api = Api(
 url, code_verifier, _ = api.get_oauth2_authorize_url(
     "http://localhost:3000", scope=["tweet.read", "tweet.write", "users.read"]
 )
-print(url)
-x = input("response:")
 
 api.generate_oauth2_access_token(x, code_verifier, "http://localhost:3000")
 
