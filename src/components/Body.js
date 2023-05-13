@@ -75,30 +75,24 @@ export default function Body(props) {
             </div>
           </div>
         </div>
-<<<<<<< HEAD
         <div className="p-12">
           <div className="border-l-4 border-indigo-600 pl-4">
-            <p className="text-sm font-medium text-gray-700 mb-1">"Reinventing democracy!"</p>
+            <p className="text-sm font-medium text-gray-700 mb-1">
+              "Reinventing democracy!"
+            </p>
             <p className="text-xs text-gray-500 ml-2">~ Nedeljski, 2023 *</p>
           </div>
           <div className="border-l-4 border-indigo-600 pl-4 mt-4">
-            <p className="text-sm font-medium text-gray-700 mb-1">"No need to drive tractors to the city centre anymore!"</p>
+            <p className="text-sm font-medium text-gray-700 mb-1">
+              "No need to drive tractors to the city centre anymore!"
+            </p>
             <p className="text-xs text-gray-500 ml-2">~ Delo, 2023 *</p>
           </div>
         </div>
-=======
-        <div className="p-5 font-serif">
-          <p className="p-2 text-sm">"Reinventing democracy!" (Nedeljski)*</p>
-          <p className="p-2 text-sm">
-            "No need to drive tractors to the city centre anymore!" (Delo)*
-          </p>
+        <div>
+          <p className="p-6 text-xs text-right mr-12">* not true statements</p>
         </div>
       </div>
->>>>>>> 6d09337148154e617f0ab7bdaa29bc22403022f7
-      <div>
-        <p className="p-6 text-xs text-right mr-12">* not true statements</p>
-      </div>
-    </div>
     </div>
   );
 }
