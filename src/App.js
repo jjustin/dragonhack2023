@@ -1,9 +1,10 @@
-
 import { useEffect, useState } from "react";
-import { BuilderComponent, builder, useIsPreviewing } from "@builder.io/react";
+import { builder, useIsPreviewing } from "@builder.io/react";
+import Header from "./components/Header";
+import Body from "./components/Body";
 
 // Put your API key here
-builder.init('af3b1c3e890f4a34b949e5ae67fc45ee');
+builder.init("af3b1c3e890f4a34b949e5ae67fc45ee");
 
 // set whether you're using the Visual Editor,
 // whether there are changes,
@@ -14,39 +15,39 @@ export default function CatchAllRoute() {
   const [content, setContent] = useState(null);
 
   // get the page content from Builder
-   useEffect(() => {
+  useEffect(() => {
     async function fetchContent() {
       const content = await builder
         .get("page", {
-          url: window.location.pathname
+          url: window.location.pathname,
         })
         .promise();
 
       setContent(content);
       setNotFound(!content);
 
-      // if the page title is found, 
+      // if the page title is found,
       // set the document title
       if (content?.data.title) {
-       document.title = content.data.title
+        document.title = content.data.title;
       }
     }
     fetchContent();
   }, [window.location.pathname]);
-  
-  // If no page is found, return 
+
+  // If no page is found, return
   // a 404 page from your code.
-  // The following hypothetical 
+  // The following hypothetical
   // <FourOhFour> is placeholder.
   if (notFound && !isPreviewingInBuilder) {
-    return <div>404</div>
+    return <div>404</div>;
   }
 
   // return the page when found
   return (
     <>
-      {/* Render the Builder page */}
-      <BuilderComponent model="page" content={content} />
+      <Header />
+      <Body />
     </>
   );
 }
