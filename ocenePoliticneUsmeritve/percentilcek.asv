@@ -1,0 +1,22 @@
+function percen = percentilcek(Matrix, givenStd)
+    
+    if (givenStd <= -3.7)
+        x = 0.0100;
+        percen = x;
+        return;
+    end
+    
+    if (givenStd >= 3.7)
+        x = 99.9900;
+        percen = x;
+        return;
+    end
+    size
+    for i = 1:size(Matrix,1)-1
+        if ((Matrix(i, 2) <= givenStd) & (givenStd <= Matrix(i+1, 2)))
+            percen = Matrix(i, 2)
+            return;
+        end
+
+    percen = 3
+end
