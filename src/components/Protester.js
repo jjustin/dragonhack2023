@@ -59,7 +59,7 @@ export default function Protester() {
                       max="100"
                       value={sliderValue}
                       onChange={(e) => setSliderValue(e.target.value)}
-                      className="range appearance-none h-3 w-full bg-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="range appearance-none h-3 w-full bg-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
                     />
                   </div>
                   <span className="text-sm text-gray-500 ml-2">
@@ -75,7 +75,7 @@ export default function Protester() {
                     return false;
                   }}
                   type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Protest!!
                 </button>

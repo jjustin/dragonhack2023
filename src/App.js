@@ -9,6 +9,7 @@ builder.init("af3b1c3e890f4a34b949e5ae67fc45ee");
 
 export default function CatchAllRoute() {
   const [isPreviewing, setStateIsPreviewing] = useState(false);
+  const [isProtesting, setStateIsProtesting] = useState(false);
   const [content, setContent] = useState(null);
 
   useEffect(() => {
@@ -17,7 +18,7 @@ export default function CatchAllRoute() {
     }
 
     async function fetchContent() {
-      if (window.location.pathname === "/rihard") {
+      if (window.location.pathname === "/") {
         const content = await builder
           .get("page", {
             url: window.location.pathname,
@@ -26,6 +27,10 @@ export default function CatchAllRoute() {
 
         setContent(content);
         setStateIsPreviewing(true);
+        setStateIsProtesting(false);
+      } else {
+        setStateIsPreviewing(false);
+        setStateIsProtesting(true);
       }
     }
     fetchContent();
@@ -34,13 +39,11 @@ export default function CatchAllRoute() {
   // return the page when found
   return (
     <>
-      {isPreviewing && <BuilderComponent model="page" content={content} />}
-      {!isPreviewing && (
-        <>
-          <Header />
-          <Protester />
-        </>
-      )}
+      <>
+        <Header />
+        {isPreviewing && <BuilderComponent model="page" content={content} />}
+        {isProtesting && <Protester />}
+      </>
     </>
   );
 }
