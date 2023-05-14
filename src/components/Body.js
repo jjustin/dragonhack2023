@@ -1,15 +1,17 @@
 import * as React from "react";
 import { useState } from "react";
-import { getUsername, tweet } from "../twitter/twitter";
+import { getUsername, isLoggedIn, logout, tweet, auth } from "../twitter/twitter";
 
 export default function Body(props) {
   const [sliderValue, setSliderValue] = useState(40);
   const [prompt, setPrompt] = useState("");
   const username = getUsername();
 
+
   return (
     <div className="h-full bg-gray-100 flex flex-col justify-center py-6 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
+        {isLoggedIn() && (
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg w-min-4/5">
           <div className="space-y-6">
             <div>
@@ -73,14 +75,25 @@ export default function Body(props) {
               >
                 Protest!!
               </button>
-              {username && (
                 <div className="block text-sm font-medium text-gray-700 pt-3 center w-full content-center justify-center flex">
                   Logged in as {username}
-                </div>
-              )}
+                </div> 
+              <div id="logout" onClick={() => logout()}>Logout</div>
             </div>
           </div>
         </div>
+        )}
+        {!isLoggedIn() && <button
+          onClick={() => {
+            auth();
+          }}
+          type="submit"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Log in with twitter to protest
+        </button>
+        }
+
         <div className="p-12">
           <div className="border-l-4 border-indigo-600 pl-4">
             <p className="text-sm font-medium text-gray-700 mb-1">

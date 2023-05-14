@@ -3,12 +3,15 @@ import { auth, isLoggedIn } from "../twitter/twitter";
 import "./Header.css";
 
 export default function Header(props) {
+  console.log(isLoggedIn());
+
   return (
     <>
       <section className="header min-w-full h-screen max-h-96 flex flex-col relative shrink-0 box-border leading-normal text-left text-3xl mx-8 section">
         <h1 className="p-12 font-bold font-mono text-5xl italic text-white">
           DIGITAL PROTESTS<span className="animate-bounce"></span>
         </h1>
+        <div id="login"></div>
         <button
           onClick={() => {
             auth();

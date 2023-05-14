@@ -54,3 +54,10 @@ export function authStep2() {
       }
     });
 }
+
+export async function logout() {
+  localStorage.removeItem(BEARER_TOKEN_KEY);
+  localStorage.removeItem(USERNAME_KEY);
+  window.location.replace(new URL(window.location).origin);
+}
+
