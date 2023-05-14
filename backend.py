@@ -25,8 +25,8 @@ def callback_url(base):
     return f"{base}/oauth/callback"
 
 
-consumer_key = "rjiIwVr1cm2N12Tz9jl0mLtAO"
-consumer_secret = "9JXopkiqJNzd4pQHji9ZwVJqBevzdiVLNz4J2djXgW5kc7wWVv"
+consumer_key = "<Key>"
+consumer_secret = "<Key secret>"
 
 client = Api(
     consumer_key=consumer_key,
