@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useState } from "react";
-import { tweet } from "../twitter/twitter";
+import { getUsername, tweet } from "../twitter/twitter";
 
 export default function Body(props) {
   const [sliderValue, setSliderValue] = useState(40);
   const [prompt, setPrompt] = useState("");
+  const username = getUsername();
 
   return (
     <div className="h-full bg-gray-100 flex flex-col justify-center py-6 sm:px-6 lg:px-8">
@@ -72,6 +73,11 @@ export default function Body(props) {
               >
                 Protest!!
               </button>
+              {username && (
+                <div className="block text-sm font-medium text-gray-700 pt-3 center w-full content-center justify-center flex">
+                  Logged in as {username}
+                </div>
+              )}
             </div>
           </div>
         </div>

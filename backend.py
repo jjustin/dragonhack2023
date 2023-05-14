@@ -1,13 +1,13 @@
 import datetime
+from urllib import response
 
+import requests
 from flask import Flask, make_response, request, session
 from flask_cors import CORS
 from pytwitter import Api
 
 from flask_session import Session
-
 from gpt import get_tweet
-import requests
 
 app = Flask(__name__)
 app.secret_key = "SuperSecret"
@@ -19,50 +19,51 @@ CORS(
     supports_credentials=True,
 )
 
-CALLBACK_URL = "http://localhost:3000/oauth/callback"
+
+def callback_url(base):
+    return f"{base}/oauth/callback"
+
 
 client = Api(
-    client_id="OVNNdGQxQ0VZYkxHell5QTZhN3M6MTpjaQ",
-    client_secret="9AI9dacS1JM0MqeDvY52SGuaTG2JuxwniFvZZpqOoYNv6TSUfH",
+    consumer_key="rjiIwVr1cm2N12Tz9jl0mLtAO",
+    consumer_secret="9JXopkiqJNzd4pQHji9ZwVJqBevzdiVLNz4J2djXgW5kc7wWVv",
     oauth_flow=True,
 )
 
 
 @app.route("/auth")
 def authStep1():
-    url, code_verifier, _ = client.get_oauth2_authorize_url(
-        CALLBACK_URL,
-        scope=["tweet.read", "tweet.write", "users.read"],
-    )
+    url_base = request.origin
 
-    resp = make_response({"url": url})
-    expire_at = datetime.datetime.now() + datetime.timedelta(days=1)
-    resp.set_cookie(
-        "code_verifier",
-        code_verifier,
-        expires=expire_at,
-    )
-    return resp
+    url = client.get_authorize_url(callback_url(url_base))
+
+    return {"url": url}
 
 
-@app.route("/auth/<code>")
-def authStep2(code):
-    code_verifier = request.cookies.get("code_verifier")
-    print(code)
-    print(code_verifier)
+@app.route("/auth/<code>/<verifier>")
+def authStep2(code, verifier):
+    url_base = request.origin
+    print(url_base, code, verifier)
     try:
-        return client.generate_oauth2_access_token(
-            f"{CALLBACK_URL}?code={code}", code_verifier, CALLBACK_URL
+        response = (
+            f"{url_base}/oauth/callback?oauth_token={code}&oauth_verifier={verifier}"
+        )
+        callback_url = f"{url_base}/oauth/callback"
+        print(response, callback_url)
+        return client.generate_access_token(
+            response,
+            callback_url,
         )
     except Exception as e:
-        return {"error": str(e)}
+        response = make_response({"error": str(e)}, 400)
+        return response
 
 
 @app.route("/tweet", methods=["POST"])
 def tweet():
     bearer = request.headers.get("Authorization")
     api = Api(bearer_token=bearer)
-    
+
     prompt = request.json["prompt"]
     seriousness = int(request.json["seriousness"])
     tweet = get_tweet(prompt, seriousness)
@@ -72,12 +73,12 @@ def tweet():
         api.create_tweet(text=tweet)
     else:
         # Set the endpoint URL
-        url = 'https://upload.twitter.com/1.1/media/upload.json?media_category=tweet_image'
+        url = "https://upload.twitter.com/1.1/media/upload.json?media_category=tweet_image"
 
         # Open the image file in binary mode
-        with open(tweet, 'rb') as f:
+        with open(tweet, "rb") as f:
             # Set the POST data
-            data = {'media': f}
+            data = {"media": f}
 
             # Make the POST request
             response = requests.post(url, headers=bearer, files=data)
@@ -85,10 +86,10 @@ def tweet():
             # Check the response status code
             if response.status_code == 200:
                 # Get the media ID from the response
-                media_id = response.json()['media_id']
-                print(f'Image uploaded successfully. Media ID: {media_id}')
+                media_id = response.json()["media_id"]
+                print(f"Image uploaded successfully. Media ID: {media_id}")
             else:
-                print(f'Error uploading image: {response.text}')
+                print(f"Error uploading image: {response.text}")
 
     return {}
 
