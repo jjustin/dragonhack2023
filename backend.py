@@ -63,32 +63,47 @@ def authStep2(code, verifier):
         return response
 
 
+@app.route("/compose", methods=["POST"])
+def compose():
+    prompt = request.json["prompt"]
+    seriousness = int(request.json["seriousness"])
+    tweet = get_tweet(prompt, seriousness)
+    return tweet
+
+
 @app.route("/tweet", methods=["POST"])
 def tweet():
     auth = request.headers.get("Authorization")
     [token, token_secret] = auth.split(":")
-    print(token, token_secret)
     api = Api(
         consumer_key=consumer_key,
         consumer_secret=consumer_secret,
         access_token=token,
         access_secret=token_secret,
     )
+    text = None
+    image_url = None
+    if "image" in request.json:
+        image_url = request.json["image"]
+        print(image_url)
+    if "text" in request.json:
+        text = request.json["text"]
+        print(text)
 
-    prompt = request.json["prompt"]
-    seriousness = int(request.json["seriousness"])
-    tweet = get_tweet(prompt, seriousness)
     # if tweet is string
-    if type(tweet) == str:
-        # print("mock tweet", tweet)
-        api.create_tweet(text=tweet)
+    if not image_url:
+        api.create_tweet(text=text)
+        # print("Mock tweet", text)
     else:
+        image_request = requests.get(image_url)
+        image = image_request.content
+        # print("mock tweet", tweet)
         # print("mock tweet image")
         # Set the endpoint URL
         url = "https://upload.twitter.com/1.1/media/upload.json?media_category=tweet_image"
 
         # Set the POST data
-        data = {"media_data": base64.b64encode(tweet[0])}
+        data = {"media_data": base64.b64encode(image)}
 
         # Make the POST request
         response = api._request(url, verb="POST", data=data)
@@ -99,11 +114,11 @@ def tweet():
             media_id = response.json()["media_id"]
             print(f"Image uploaded successfully. Media ID: {media_id}")
             # put list tweet[1] to str
-            mentions = ""
-            for mention in tweet[1]:
-                mentions += mention + " "
 
-            api.create_tweet(text=mentions, media_media_ids=[str(media_id)], media_tagged_user_ids=[])
+            res = api.create_tweet(
+                text=text, media_media_ids=[str(media_id)], media_tagged_user_ids=[]
+            )
+            print(res)
 
         else:
             print(f"Error uploading image: {response.text} {response.status_code}")

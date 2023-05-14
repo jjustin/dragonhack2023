@@ -6,6 +6,7 @@ import {
   logout,
   tweet,
   auth,
+  composeTweet,
 } from "../twitter/twitter";
 import serious_image from "./serious.png";
 
@@ -13,6 +14,10 @@ export default function Protester() {
   const [sliderValue, setSliderValue] = useState(40);
   const [prompt, setPrompt] = useState("");
   const username = getUsername();
+
+  const [image, setImage] = useState(null);
+  const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const seriousVisible = (Math.max(0, sliderValue - 87) / (100 - 87)) * 100;
   const loggedIn = isLoggedIn();
@@ -79,7 +84,15 @@ export default function Protester() {
                 <div>
                   <button
                     onClick={() => {
-                      tweet(prompt, sliderValue);
+                      setLoading(true);
+                      setText("");
+                      setImage("");
+
+                      composeTweet(prompt, sliderValue).then((r) => {
+                        setText(r.text);
+                        setImage(r.image);
+                        setLoading(false);
+                      });
                       return false;
                     }}
                     style={{ backgroundColor: "rgba(255, 78, 94, 1)" }}
@@ -88,6 +101,33 @@ export default function Protester() {
                   >
                     Protest!!
                   </button>
+                  {loading && <div>loading</div>}
+                  {(text || image) && (
+                    <div className="py-3">We prepared this tweet for you:</div>
+                  )}
+                  {text && <div className=" py-3">{text}</div>}
+                  {image && (
+                    <div className="flex justify-center items-center">
+                      <img src={image} className="pb-10" />
+                    </div>
+                  )}
+                  {(text || image) && (
+                    <button
+                      onClick={() => {
+                        tweet(image, text).then((r) => {
+                          setText("");
+                          setImage("");
+                          setLoading(false);
+                        });
+                        return false;
+                      }}
+                      style={{ backgroundColor: "rgba(255, 78, 94, 1)" }}
+                      type="submit"
+                      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Post it
+                    </button>
+                  )}
                   <div className="block text-sm font-medium text-gray-700 pt-16 center w-full content-center justify-center flex">
                     Logged in as {username}
                   </div>

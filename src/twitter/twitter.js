@@ -15,13 +15,22 @@ export function getUsername() {
   return localStorage.getItem(USERNAME_KEY);
 }
 
-export async function tweet(prompt, seriousness) {
+export async function composeTweet(prompt, seriousness) {
+  return fetch(API_URL + "/compose", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify({ prompt, seriousness }),
+  }).then((res) => res.json());
+}
+
+export async function tweet(image, text) {
+  console.log({ image, text });
   const bearerToken = localStorage.getItem(BEARER_TOKEN_KEY);
   console.log(bearerToken);
   fetch(API_URL + "/tweet", {
     headers: { Authorization: bearerToken, "Content-Type": "application/json" },
     method: "POST",
-    body: JSON.stringify({ prompt, seriousness }),
+    body: JSON.stringify({ image, text }),
   }).then((res) => res.json());
 }
 
