@@ -1,0 +1,89 @@
+
+
+
+mat= readtable('politiki.csv','NumHeaderLines',0)
+
+matPrip = mat(:, 2:end);
+
+ekonomskiVektor = matPrip(:,1);
+socialniVektor = matPrip(:, 2);
+
+ekonMean = mean(ekonomskiVektor);
+ekonStd = std(ekonomskiVektor);
+socialMean = mean(socialniVektor);
+socialStd = std(socialniVektor);
+
+
+
+normalEkonomski = (ekonomskiVektor - ekonMean) ./ ekonStd;
+normalSocial = (socialniVektor - socialMean) ./ socialMean;
+
+izpisnaMatrika = [mat(:,1), normalEkonomski, normalSocial];
+
+
+normalizacijaDobljeneSpremenljivke = [ekonMean.Var2 ekonStd.Var2; socialMean.Var3 socialStd.Var3]
+
+
+normalniSkupaj = [mat.Var1, normalEkonomski, normalSocial]
+writetable(normalniSkupaj,'normalniSkupaj.csv')
+
+
+normalEkonomski = rows2vars(normalEkonomski);
+normalSocial = rows2vars(normalSocial);
+
+normalEkonomski = normalEkonomski(1, 2:end);
+normalSocial = normalSocial(1, 2:end);
+
+
+normalEkonomski = table2array(normalEkonomski);
+normalSocial = table2array(normalSocial);
+
+
+
+
+
+figure(1);
+hist(normalEkonomski);
+hold on;
+
+figure(2);
+hist(normalSocial);
+hold on
+
+
+
+
+
+% standardNormal = normpdf(linspace(-5, 5));
+
+normalnaPerc = readtable('normalna.csv','NumHeaderLines',0)
+negPercentili = (100 - normalnaPerc(2:end,1))
+standardna = -1 .* normalnaPerc(2:end,2)
+
+normalnaNeg = [negPercentili(:,:), standardna(:,:)]
+
+normalnaPerc = flip(normalnaPerc, 1)
+
+normalnaZdruzena = [ normalnaPerc; normalnaNeg]
+
+normalniPercentili = table2array(normalnaZdruzena)
+
+
+
+
+ZakljucneVrednostiMed0In100 = zeros(size(normalEkonomski,2), 2);
+
+size(normalEkonomski,2)
+
+for i = 1:size(normalEkonomski,2)
+        ZakljucneVrednostiMed0In100(i, 1) = percentilcek(normalniPercentili, normalEkonomski(1, i));
+end
+
+for i = 1:size(normalSocial,2)
+        ZakljucneVrednostiMed0In100(i, 2) = percentilcek(normalniPercentili, normalSocial(1, i));
+end
+
+mat(:, 1)
+
+ZakljucneVrednostiMed0In100 = [mat.Var1 , array2table(ZakljucneVrednostiMed0In100(:,:))]
+writetable(ZakljucneVrednostiMed0In100,'Percentili.csv')
