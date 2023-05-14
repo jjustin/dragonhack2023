@@ -91,17 +91,19 @@ export default function Protester() {
                   <div className="block text-sm font-medium text-gray-700 pt-16 center w-full content-center justify-center flex">
                     Logged in as {username}
                   </div>
-                  <button
-                    onClick={() => {
-                      logout();
-                      return false;
-                    }}
-                    style={{ backgroundColor: "rgba(90,90,90, 1)" }}
-                    type="submit"
-                    className="w-100 center content-center justify-center flex mt-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    Log out
-                  </button>
+                  <div className="w-full flex justify-center">
+                    <button
+                      onClick={() => {
+                        logout();
+                        return false;
+                      }}
+                      style={{ backgroundColor: "rgba(90,90,90, 1)" }}
+                      type="submit"
+                      className="w-100 flex justify-center mt-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Log out
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
