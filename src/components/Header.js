@@ -9,8 +9,8 @@ export default function Header(props) {
     <>
       <section className="header min-w-full h-screen max-h-32 flex flex-col relative shrink-0 box-border leading-normal text-left mx-8 section bg-red-600	">
         <h1 className="px-12 pt-8 font-bold font-mono text-5xl italic text-white text-black">
-          <span className="animate-bounce text-5xl">eProtest</span>
-          <div className="text-xs">It's not spam if it's protesting</div>
+          <span className="animate-bounce text-5xl">Spark</span>
+          <div className="text-sm">Ignite your voice.</div>
         </h1>
       </section>
     </>
