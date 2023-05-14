@@ -1,3 +1,4 @@
+import base64
 import datetime
 from urllib import response
 
@@ -77,29 +78,31 @@ def tweet():
     prompt = request.json["prompt"]
     seriousness = int(request.json["seriousness"])
     tweet = get_tweet(prompt, seriousness)
-
+    print(type(tweet), tweet[20])
     # if tweet is string
     if type(tweet) == str:
-        api.create_tweet(text=tweet)
+        print("mock tweet", tweet)
+        # api.create_tweet(text=tweet)
     else:
-        # Set the endpoint URL
-        url = "https://upload.twitter.com/1.1/media/upload.json?media_category=tweet_image"
+        print("mock tweet image")
+    #     # Set the endpoint URL
+    #     url = "https://upload.twitter.com/1.1/media/upload.json?media_category=tweet_image"
 
-        # Open the image file in binary mode
-        with open(tweet, "rb") as f:
-            # Set the POST data
-            data = {"media": f}
+    #     # Set the POST data
+    #     data = {"media_data": base64.b64encode(tweet)}
 
-            # Make the POST request
-            response = requests.post(url, headers=bearer, files=data)
+    #     # Make the POST request
+    #     response = api._request(url, verb="POST", data=data)
 
-            # Check the response status code
-            if response.status_code == 200:
-                # Get the media ID from the response
-                media_id = response.json()["media_id"]
-                print(f"Image uploaded successfully. Media ID: {media_id}")
-            else:
-                print(f"Error uploading image: {response.text}")
+    #     # Check the response status code
+    #     if response.status_code == 200:
+    #         # Get the media ID from the response
+    #         media_id = response.json()["media_id"]
+    #         print(f"Image uploaded successfully. Media ID: {media_id}")
+    #         api.create_tweet(media_media_ids=[str(media_id)], media_tagged_user_ids=[])
+
+    #     else:
+    #         print(f"Error uploading image: {response.text} {response.status_code}")
 
     return {}
 
