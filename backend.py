@@ -78,7 +78,6 @@ def tweet():
     prompt = request.json["prompt"]
     seriousness = int(request.json["seriousness"])
     tweet = get_tweet(prompt, seriousness)
-    print(type(tweet), tweet[20])
     # if tweet is string
     if type(tweet) == str:
         # print("mock tweet", tweet)
@@ -99,7 +98,12 @@ def tweet():
             # Get the media ID from the response
             media_id = response.json()["media_id"]
             print(f"Image uploaded successfully. Media ID: {media_id}")
-            api.create_tweet(text=tweet[1], media_media_ids=[str(media_id)], media_tagged_user_ids=[])
+            # put list tweet[1] to str
+            mentions = ""
+            for mention in tweet[1]:
+                mentions += mention + " "
+
+            api.create_tweet(text=mentions, media_media_ids=[str(media_id)], media_tagged_user_ids=[])
 
         else:
             print(f"Error uploading image: {response.text} {response.status_code}")
