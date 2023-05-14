@@ -1,7 +1,7 @@
 import requests
 import random
 
-def get_tweet(temperature, prompt):
+def get_tweet(prompt, temperature):
 
     temperature = float(1.0 - temperature/100)
 

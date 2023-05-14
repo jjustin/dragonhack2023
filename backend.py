@@ -6,6 +6,9 @@ from pytwitter import Api
 
 from flask_session import Session
 
+from gpt import get_tweet
+import requests
+
 app = Flask(__name__)
 app.secret_key = "SuperSecret"
 app.config["SESSION_TYPE"] = "filesystem"
@@ -57,10 +60,36 @@ def authStep2(code):
 
 @app.route("/tweet", methods=["POST"])
 def tweet():
-    # bearer = request.authorization
-    print("Fake tweet: ", request.json)
-    # api = Api(bearer_token=bearer["username"])
-    # api.create_tweet("Test tweet")
+    bearer = request.headers.get("Authorization")
+    api = Api(bearer_token=bearer)
+    
+    prompt = request.json["prompt"]
+    seriousness = int(request.json["seriousness"])
+    tweet = get_tweet(prompt, seriousness)
+
+    # if tweet is string
+    if type(tweet) == str:
+        api.create_tweet(text=tweet)
+    else:
+        # Set the endpoint URL
+        url = 'https://upload.twitter.com/1.1/media/upload.json?media_category=tweet_image'
+
+        # Open the image file in binary mode
+        with open(tweet, 'rb') as f:
+            # Set the POST data
+            data = {'media': f}
+
+            # Make the POST request
+            response = requests.post(url, headers=bearer, files=data)
+
+            # Check the response status code
+            if response.status_code == 200:
+                # Get the media ID from the response
+                media_id = response.json()['media_id']
+                print(f'Image uploaded successfully. Media ID: {media_id}')
+            else:
+                print(f'Error uploading image: {response.text}')
+
     return {}
 
 
