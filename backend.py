@@ -24,9 +24,12 @@ def callback_url(base):
     return f"{base}/oauth/callback"
 
 
+consumer_key = "rjiIwVr1cm2N12Tz9jl0mLtAO"
+consumer_secret = "9JXopkiqJNzd4pQHji9ZwVJqBevzdiVLNz4J2djXgW5kc7wWVv"
+
 client = Api(
-    consumer_key="rjiIwVr1cm2N12Tz9jl0mLtAO",
-    consumer_secret="9JXopkiqJNzd4pQHji9ZwVJqBevzdiVLNz4J2djXgW5kc7wWVv",
+    consumer_key=consumer_key,
+    consumer_secret=consumer_secret,
     oauth_flow=True,
 )
 
@@ -61,8 +64,15 @@ def authStep2(code, verifier):
 
 @app.route("/tweet", methods=["POST"])
 def tweet():
-    bearer = request.headers.get("Authorization")
-    api = Api(bearer_token=bearer)
+    auth = request.headers.get("Authorization")
+    [token, token_secret] = auth.split(":")
+    print(token, token_secret)
+    api = Api(
+        consumer_key=consumer_key,
+        consumer_secret=consumer_secret,
+        access_token=token,
+        access_secret=token_secret,
+    )
 
     prompt = request.json["prompt"]
     seriousness = int(request.json["seriousness"])
