@@ -32,7 +32,7 @@ def get_tweet(prompt, temperature):
     
     else:
         # fetch the list of templates
-        response = requests.get('https://api.memegen.link/templates')
+        response = requests.get('https://api.memegen.link/templates?animated=false')
         templates = response.json()
 
         # get all names
@@ -48,7 +48,8 @@ def get_tweet(prompt, temperature):
                 "temperature": temperature, # float
                 "messages": [
                     {"role": "system", "content": f"Generate text for a meme, that express protest on a given topic. \
-                    When writing these tweets, it is important to use the same language as the topic of protest is written in. Chose one random meme template from this list: {names_limited}\
+                    When writing these tweets, it is important to use the same language as the topic of protest is written in. \
+                     After choosing the text, choose the most appropriate template for given text: {names_limited}\
                     Answer in the format of Python list of strings: [<meme template name from the list>, <top text>, <bottom text]\
                     Top and bottom text have to be shorter than 100 characters."},
                     {"role": "user", "content": "Oil prices"},
@@ -63,12 +64,14 @@ def get_tweet(prompt, temperature):
             meme_name = meme_list[0]
             # find id of the meme template
             for template in templates:
-                if template['name'] == meme_name:
+                if template['name'].lower() == meme_name.lower():
+                    if template['lines'] == 1:
+                        meme_list = [meme_list[0], meme_list[1] +" "+ meme_list[2]]
                     meme_list[0] = template['id']
                     break
 
             # Create a meme
-            url = f'https://api.memegen.link/images/{meme_list[0]}/{meme_list[1]}/{meme_list[2]}.png'
+            url = f'https://api.memegen.link/images/{"/".join(meme_list)}.png'
             url = url.replace(" ", "_")
             print(url)
             response = requests.get(url)

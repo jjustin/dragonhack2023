@@ -77,7 +77,7 @@ export default function Body(props) {
               </button>
                 <div className="block text-sm font-medium text-gray-700 pt-3 center w-full content-center justify-center flex">
                   Logged in as {username}
-                </div> 
+                </div>               
               <div id="logout" onClick={() => logout()}>Logout</div>
             </div>
           </div>
@@ -93,7 +93,7 @@ export default function Body(props) {
           Log in with twitter to protest
         </button>
         }
-
+        
         <div className="p-12">
           <div className="border-l-4 border-indigo-600 pl-4">
             <p className="text-sm font-medium text-gray-700 mb-1">

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
-import Body from "./components/Body";
+import Protester from "./components/Protester";
 import { authStep2 } from "./twitter/twitter";
 import { BuilderComponent, builder } from "@builder.io/react";
 
 // Put your API key here
 builder.init("af3b1c3e890f4a34b949e5ae67fc45ee");
+
 export default function CatchAllRoute() {
   const [isPreviewing, setStateIsPreviewing] = useState(false);
   const [content, setContent] = useState(null);
@@ -37,7 +38,7 @@ export default function CatchAllRoute() {
       {!isPreviewing && (
         <>
           <Header />
-          <Body />
+          <Protester />
         </>
       )}
     </>
