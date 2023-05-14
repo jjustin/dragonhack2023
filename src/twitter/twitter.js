@@ -4,8 +4,10 @@ const API_URL = "http://localhost:5000";
 
 export function isLoggedIn() {
   if (localStorage.getItem(BEARER_TOKEN_KEY)) {
+    console.log("logged in");
     return true;
   }
+  console.log("not logged in");
   return false;
 }
 
@@ -50,7 +52,7 @@ export function authStep2() {
       if (token) {
         localStorage.setItem(BEARER_TOKEN_KEY, token + ":" + token_secret);
         localStorage.setItem(USERNAME_KEY, username);
-        window.location.replace(new URL(window.location).origin);
+        window.location.replace(new URL(window.location).origin + "/protest");
       }
     });
 }
@@ -60,4 +62,3 @@ export async function logout() {
   localStorage.removeItem(USERNAME_KEY);
   window.location.replace(new URL(window.location).origin);
 }
-
