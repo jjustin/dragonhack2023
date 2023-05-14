@@ -81,28 +81,28 @@ def tweet():
     print(type(tweet), tweet[20])
     # if tweet is string
     if type(tweet) == str:
-        print("mock tweet", tweet)
-        # api.create_tweet(text=tweet)
+        # print("mock tweet", tweet)
+        api.create_tweet(text=tweet)
     else:
-        print("mock tweet image")
-    #     # Set the endpoint URL
-    #     url = "https://upload.twitter.com/1.1/media/upload.json?media_category=tweet_image"
+        # print("mock tweet image")
+        # Set the endpoint URL
+        url = "https://upload.twitter.com/1.1/media/upload.json?media_category=tweet_image"
 
-    #     # Set the POST data
-    #     data = {"media_data": base64.b64encode(tweet)}
+        # Set the POST data
+        data = {"media_data": base64.b64encode(tweet[0])}
 
-    #     # Make the POST request
-    #     response = api._request(url, verb="POST", data=data)
+        # Make the POST request
+        response = api._request(url, verb="POST", data=data)
 
-    #     # Check the response status code
-    #     if response.status_code == 200:
-    #         # Get the media ID from the response
-    #         media_id = response.json()["media_id"]
-    #         print(f"Image uploaded successfully. Media ID: {media_id}")
-    #         api.create_tweet(media_media_ids=[str(media_id)], media_tagged_user_ids=[])
+        # Check the response status code
+        if response.status_code == 200:
+            # Get the media ID from the response
+            media_id = response.json()["media_id"]
+            print(f"Image uploaded successfully. Media ID: {media_id}")
+            api.create_tweet(text=tweet[1], media_media_ids=[str(media_id)], media_tagged_user_ids=[])
 
-    #     else:
-    #         print(f"Error uploading image: {response.text} {response.status_code}")
+        else:
+            print(f"Error uploading image: {response.text} {response.status_code}")
 
     return {}
 
