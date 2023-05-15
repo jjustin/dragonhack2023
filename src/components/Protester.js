@@ -128,7 +128,7 @@ export default function Protester() {
                       >
                         Post it
                       </button>
-                      <div>Check out <a href="https://twitter.com/DrazenHako77128">Drago Hak</a> on twitter to see what the final results look like!</div>
+                      <div>Check out <a href="https://twitter.com/DrazenHako77128" className="underline text-blue-700">Drago Hak</a> on twitter to see what the final results look like!</div>
                      </>
                   )}
                   <div className="block text-sm font-medium text-gray-700 pt-16 center w-full content-center justify-center flex">
