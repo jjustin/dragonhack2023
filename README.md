@@ -4,7 +4,7 @@ Are protests too hard to attend?
 Are you not a fan of riding a bike through the city centre?  
 Are the gas prices making you rethink heading to Ljubljana with your tractor?  
 Boy, do we have a solution for you!  
-✨**Spark!**✨  
+✨**Spark!** ✨  
 Spark is the next generation... of political participation.  
 Protesting is a lot easier and a lot more fun on twitter.  
 But... forming thoughts is hard. Whoooo neeeds it?? 
