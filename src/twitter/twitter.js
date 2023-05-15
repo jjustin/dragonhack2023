@@ -16,11 +16,11 @@ export function getUsername() {
 }
 
 export async function composeTweet(prompt, seriousness) {
-    const random_meme = "https://meme-api.com/gimme"
-    return {
-      text: "This feauture is disabled. This is an example tweet about '"+ prompt +"' that won't and can't be posted #makeTwitterAPIPublic @twiiter @elonMusk. Here is a random meme:",
-      image: random_meme.preview[4]
-    }
+  const random_meme = "https://meme-api.com/gimme"
+  return {
+    text: "This feauture is disabled. This is an example tweet about '"+ prompt +"' that won't and can't be posted #makeTwitterAPIPublic @twiiter @elonMusk. Here is a random meme:",
+    image: random_meme.preview[4]
+  }
 //  return fetch(API_URL + "/compose", {
 //    headers: { "Content-Type": "application/json" },
 //    method: "POST",
@@ -41,11 +41,14 @@ export async function tweet(image, text) {
 }
 
 export async function auth() {
-  await fetch(API_URL + "/auth", { credentials: "include" })
-    .then((res) => res.json())
-    .then(({ url }) => {
-      window.location.replace(url);
-    });
+  localStorage.setItem(BEARER_TOKEN_KEY, "fake token lmao");
+  localStorage.setItem(USERNAME_KEY, "mock user");
+  window.location.replace(new URL(window.location).origin + "/protest");
+//  await fetch(API_URL + "/auth", { credentials: "include" })
+//    .then((res) => res.json())
+//    .then(({ url }) => {
+//      window.location.replace(url);
+//    });
 }
 
 export function authStep2() {
