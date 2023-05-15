@@ -34,7 +34,7 @@ export default function CatchAllRoute() {
       }
     }
     fetchContent();
-  }, [window.location.pathname]);
+  }, []);
 
   // return the page when found
   return (
