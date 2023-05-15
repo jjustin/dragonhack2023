@@ -112,22 +112,24 @@ export default function Protester() {
                     </div>
                   )}
                   {(text || image) && (
-                    <button
-                      onClick={() => {
-                        tweet(image, text).then((r) => {
-                          setText("");
-                          setImage("");
-                          setLoading(false);
-                        });
-                        return false;
-                      }}
-                      style={{ backgroundColor: "rgba(255, 78, 94, 1)" }}
-                      type="submit"
-                      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Post it
-                    </button>
-                    <div>Check out <a href="https://twitter.com/DrazenHako77128">Drago Hak</a> on twitter to see what the final results look like!</div>
+                    <>
+                      <button
+                        onClick={() => {
+                          tweet(image, text).then((r) => {
+                            setText("");
+                            setImage("");
+                            setLoading(false);
+                          });
+                          return false;
+                        }}
+                        style={{ backgroundColor: "rgba(255, 78, 94, 1)" }}
+                        type="submit"
+                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      >
+                        Post it
+                      </button>
+                      <div>Check out <a href="https://twitter.com/DrazenHako77128">Drago Hak</a> on twitter to see what the final results look like!</div>
+                     </>
                   )}
                   <div className="block text-sm font-medium text-gray-700 pt-16 center w-full content-center justify-center flex">
                     Logged in as {username}
