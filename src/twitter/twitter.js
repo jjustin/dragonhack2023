@@ -16,22 +16,28 @@ export function getUsername() {
 }
 
 export async function composeTweet(prompt, seriousness) {
-  return fetch(API_URL + "/compose", {
-    headers: { "Content-Type": "application/json" },
-    method: "POST",
-    body: JSON.stringify({ prompt, seriousness }),
-  }).then((res) => res.json());
+    const random_meme = "https://meme-api.com/gimme"
+    return {
+      text: "This feauture is disabled. This is an example tweet about '"+ prompt +"' that won't and can't be posted #makeTwitterAPIPublic @twiiter @elonMusk. Here is a random meme:",
+      image: random_meme.preview[4]
+    }
+//  return fetch(API_URL + "/compose", {
+//    headers: { "Content-Type": "application/json" },
+//    method: "POST",
+//    body: JSON.stringify({ prompt, seriousness }),
+//  }).then((res) => res.json());
 }
 
 export async function tweet(image, text) {
-  console.log({ image, text });
-  const bearerToken = localStorage.getItem(BEARER_TOKEN_KEY);
-  console.log(bearerToken);
-  fetch(API_URL + "/tweet", {
-    headers: { Authorization: bearerToken, "Content-Type": "application/json" },
-    method: "POST",
-    body: JSON.stringify({ image, text }),
-  }).then((res) => res.json());
+  return {}
+//  console.log({ image, text });
+//  const bearerToken = localStorage.getItem(BEARER_TOKEN_KEY);
+//  console.log(bearerToken);
+//  fetch(API_URL + "/tweet", {
+//    headers: { Authorization: bearerToken, "Content-Type": "application/json" },
+//    method: "POST",
+//    body: JSON.stringify({ image, text }),
+//  }).then((res) => res.json());
 }
 
 export async function auth() {
