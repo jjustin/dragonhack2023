@@ -108,7 +108,7 @@ export default function Protester() {
                   {text && <div className=" py-3">{text}</div>}
                   {image && (
                     <div className="flex justify-center items-center">
-                      <img src={image} className="pb-10" />
+                      <img src={image} className="pb-10" alt="preview" />
                     </div>
                   )}
                   {(text || image) && (
