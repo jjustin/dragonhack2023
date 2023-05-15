@@ -18,7 +18,7 @@ export function getUsername() {
 export async function composeTweet(prompt, seriousness) {
   return fetch("https://meme-api.com/gimme").then(res => res.json()).then(res => ({
     text: "This feauture is disabled. This is an example tweet about '"+ prompt +"' that won't and can't be posted #makeTwitterAPIPublic @twiiter @elonMusk. Here is a random meme:",
-    image: res.preview[4]
+    image: res.preview[res.preview.length-1]
   }))
 //  return fetch(API_URL + "/compose", {
 //    headers: { "Content-Type": "application/json" },
