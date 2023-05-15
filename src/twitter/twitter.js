@@ -16,11 +16,10 @@ export function getUsername() {
 }
 
 export async function composeTweet(prompt, seriousness) {
-  const random_meme = "https://meme-api.com/gimme"
-  return {
+  return fetch("https://meme-api.com/gimme").then(res => res.json()).then({
     text: "This feauture is disabled. This is an example tweet about '"+ prompt +"' that won't and can't be posted #makeTwitterAPIPublic @twiiter @elonMusk. Here is a random meme:",
     image: random_meme.preview[4]
-  }
+  })
 //  return fetch(API_URL + "/compose", {
 //    headers: { "Content-Type": "application/json" },
 //    method: "POST",
@@ -29,7 +28,7 @@ export async function composeTweet(prompt, seriousness) {
 }
 
 export async function tweet(image, text) {
-  return {}
+  return new Promise({})
 //  console.log({ image, text });
 //  const bearerToken = localStorage.getItem(BEARER_TOKEN_KEY);
 //  console.log(bearerToken);
